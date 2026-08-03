@@ -8,8 +8,8 @@ class Solution {
             }
             else{
                 count++;
-                if(count>k) return false;
                 sum=arr[i];
+                if(count>k) return false;
             }
         }
             return true;
