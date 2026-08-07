@@ -6,30 +6,22 @@ class Solution {
         int low=0;
         int high=m;
         while(low<=high){
-            int Px=low+(high-low)/2;
-            int Py=(m+n+1)/2-Px;
-
-            // left half wale
-            int x1= (Px==0)?Integer.MIN_VALUE : nums1[Px-1];
-            int x2= (Py==0)?Integer.MIN_VALUE : nums2[Py-1];
-
-            // right half wale
-            int x3= (Px==m)?Integer.MAX_VALUE : nums1[Px];
-            int x4= (Py==n)?Integer.MAX_VALUE : nums2[Py];
-
-            if(x1<=x4 && x2<=x3){
+            int mid1=low+(high-low)/2;
+            int mid2=((m+n+1)/2)-mid1;
+            int l1=(mid1==0)?Integer.MIN_VALUE:nums1[mid1-1];
+            int l2=(mid2==0)?Integer.MIN_VALUE:nums2[mid2-1];
+            int r1=(mid1==m)?Integer.MAX_VALUE:nums1[mid1];
+            int r2=(mid2==n)?Integer.MAX_VALUE:nums2[mid2];
+            if(l1<=r2 && l2<=r1){
                 if((m+n)%2==1){
-                    return Math.max(x1,x2);
+                    return Math.max(l1,l2);
                 }
                 else{
-                    return (Math.max(x1,x2)+Math.min(x3,x4))/2.0;
+                    return (Math.max(l1,l2)+Math.min(r1,r2))/2.0;
                 }
             }
-                if(x1>x4){
-                    high=Px-1;
-
-                }
-                else low=Px+1;
+            else if(l1>r2) high=mid1-1;
+            else low=mid1+1;
         }
         return -1;
     }
