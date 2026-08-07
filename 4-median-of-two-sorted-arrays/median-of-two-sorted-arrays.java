@@ -1,33 +1,36 @@
 class Solution {
-    public int[] mergeSorted(int[]nums1,int[]nums2){
-        int n=nums1.length;
-        int m=nums2.length;
-        int[]temp=new int[n+m];
-        int i=0;
-        int j=0;
-        int idx=0;
-        while(i<n && j<m){
-            if(nums1[i]<=nums2[j]){
-                temp[idx++]=nums1[i++];
-            }
-            else if(nums1[i]>=nums2[j]){
-                temp[idx++]=nums2[j++];
-            }
-        }
-        while(i<n){
-            temp[idx++]=nums1[i++];
-        }
-        while(j<m){
-            temp[idx++]=nums2[j++];
-        }
-        return temp;
-    }
     public double findMedianSortedArrays(int[] nums1, int[] nums2) {
-        int[]temp=mergeSorted(nums1,nums2);
-        int n=temp.length;
-        if(n%2==0){
-            return (temp[n/2]+temp[(n/2)-1])/2.0;
+        if(nums1.length>nums2.length) return findMedianSortedArrays(nums2,nums1);
+        int m=nums1.length;
+        int n=nums2.length;
+        int low=0;
+        int high=m;
+        while(low<=high){
+            int Px=low+(high-low)/2;
+            int Py=(m+n+1)/2-Px;
+
+            // left half wale
+            int x1= (Px==0)?Integer.MIN_VALUE : nums1[Px-1];
+            int x2= (Py==0)?Integer.MIN_VALUE : nums2[Py-1];
+
+            // right half wale
+            int x3= (Px==m)?Integer.MAX_VALUE : nums1[Px];
+            int x4= (Py==n)?Integer.MAX_VALUE : nums2[Py];
+
+            if(x1<=x4 && x2<=x3){
+                if((m+n)%2==1){
+                    return Math.max(x1,x2);
+                }
+                else{
+                    return (Math.max(x1,x2)+Math.min(x3,x4))/2.0;
+                }
+            }
+                if(x1>x4){
+                    high=Px-1;
+
+                }
+                else low=Px+1;
         }
-        return (double)temp[n/2];
+        return -1;
     }
 }
