@@ -5,14 +5,10 @@ class Solution {
             return;
         }
         if(open!=0){
-            String op1=op;
-            op1+='(';
-            solve(open-1,close,op1,ans);
+            solve(open-1,close,op+'(',ans);
         }
         if(close>open){
-            String op2=op;
-            op2+=')';
-            solve(open,close-1,op2,ans);
+            solve(open,close-1,op+')',ans);
 
         }
     }
@@ -20,8 +16,7 @@ class Solution {
         List<String>ans=new ArrayList<>();
         int open=n;
         int close=n;
-        String op="";
-        solve(open,close,op,ans);
+        solve(open,close,"",ans);
         return ans;
     }
 }
